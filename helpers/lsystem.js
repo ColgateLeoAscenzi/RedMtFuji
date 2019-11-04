@@ -18,8 +18,8 @@ var rule2 = {
 
 
 var Ldefinitions = new Object();
-Ldefinitions["F"] = "drawTriangle(distance, tan, currentPos, 'gl.TRIANGLE_FAN', false);drawTriangle(distance, darkBlue, currentPos, 'gl.LINE_LOOP', true);";
-Ldefinitions["L"] = "drawTriangle(distance, tan, currentPos, 'gl.TRIANGLE_FAN', false);drawTriangle(distance, darkBlue, currentPos, 'gl.LINE_LOOP', true);";
+Ldefinitions["F"] = "drawTriangle(distance, tan, currentPos, 'gl.TRIANGLE_FAN', true);";
+Ldefinitions["L"] = "drawTriangle(distance, tan, currentPos, 'gl.TRIANGLE_FAN', true);";
 Ldefinitions["+"] =  "changeAngle(-90, currentPos)";
 Ldefinitions["-"] =  "changeAngle(90, currentPos)";
 //
@@ -106,7 +106,7 @@ function drawFractal(generations, currentPosN){
     pushTransform();
 
         currentPos = currentPosN;
-		var distance = 1;
+		var distance = 0.01;
         var newWord = word
         for(var i = 0; i < newWord.length; i++){
 				var definitionsHash = Lsystem.definitions;

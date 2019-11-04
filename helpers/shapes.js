@@ -138,7 +138,24 @@ function curveTriangle(corner, side, angles, p1, p2, drawGuide){
 	return newVert;
 }
 
-function waveFractal(generations, currentPosition){
+function waveFractal(generations, currentP){
+    // pushTransform();
+        // transform.scale(-1,1);
+        var generations = generations
+        var currentPosN = currentP;
+        // pushTransform();
+            // transform.translate(0,0);
+            // transform.scale(0.04);
+            drawFractal(generations, currentP);
+    //     popTransform();
+    // popTransform();
 
-    drawFractal(generations, currentPosition)
+}
+
+function spawnCrests(points){
+    console.log(points);
+    for(var i = 0; i < points.length-1; i+=6){
+        //filledTriangle([1,0,0,1], genTriangle([points[i],points[i+1]], 0.2, [60,60,60]));
+        //waveFractal(8, [points[i], points[i+1], 0]);
+    }
 }

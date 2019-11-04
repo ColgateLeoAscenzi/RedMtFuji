@@ -26,14 +26,17 @@ function waveBody(){
     pushTransform();
         transform.scale(0.7);
         transform.translate(-1.5,0.565);
-        filledTriangle(lightBlue, curveTriangle([0,0], 1, [60,60,60], [0.45,0.15], [0.35,0.35], false), "gl.TRIANGLE_FAN");
+        var curveVerts = curveTriangle([0,0], 1, [60,60,60], [0.45,0.15], [0.35,0.35], false);
+        filledTriangle(lightBlue, curveVerts, "gl.TRIANGLE_FAN");
+        // filledTriangle(lightBlue, curveTriangle([0,0], 1, [60,60,60], [0.45,0.15], [0.35,0.35], false), "gl.TRIANGLE_FAN");
+        spawnCrests(curveVerts.slice(2,curveVerts.length-2));
     popTransform();
 
-    pushTransform();
-        transform.scale(0.4);
-        transform.translate(0,0);
-        pentagon([0,0], [0,0], [red], 1);
-    popTransform();
+    // pushTransform();
+    //     transform.scale(0.4);
+    //     transform.translate(0,0);
+    //     pentagon([0,0], [0,0], [red], 1);
+    // popTransform();
 
 
 }

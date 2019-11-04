@@ -137,6 +137,7 @@ function initGL() {
         var prog = createProgram( gl, vertexShaderSource, fragmentShaderSource );
         gl.useProgram(prog);
 
+
         vertexAttributeLocation = gl.getAttribLocation(prog, "vertexCoords");
         transformUniformLocation = gl.getUniformLocation(prog, "coordinateTransform");
         colorAttribLocation = gl.getAttribLocation(prog, "vertexColor");
@@ -184,6 +185,7 @@ function startAnimation() {
 function pauseAnimation() {
     animating = false;
 }
+
 
 
 /*--------------------------- initialization ----------------------------------*/
