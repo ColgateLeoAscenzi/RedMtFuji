@@ -6,15 +6,12 @@
 <script src="helpers/math.js"></script>
 <script src="helpers/colorandsphere.js"></script>
 <script src="helpers/curve_utils.js"></script>
+<script src="helpers/color_utils.js"></script>
 <script src="helpers/AffineTransform2D.js"></script>
-<script src="scenes/mainscene.js"></script>
 <script src="helpers/shapes.js"></script>
 <script src="helpers/lsystem.js"></script>
-<script src="scenes/bigwave.js"></script>
-<script src="scenes/accents.js"></script>.
-<script src="scenes/foreground.js"></script>
-<script src="scenes/bigwave.js"></script>
-<script src="helpers/geometries.js"></script>
+<script src="scenes/mtfuji.js"></script>
+<script src="scenes/mainscene.js"></script>.
 <script src="shaders.js"></script>
 
 </head>
@@ -29,17 +26,12 @@
 
 <p><b>Choose Piece of Wave to Draw</b>
     <select id="sceneselect">
-       <option>Background</option>
-       <option selected="selected" >The Wave</option>
-       <option >Fractal</option>
-       <option >Foreground</option>
-       <option >Ocean Spray</option>
-       <option >All </option>
+       <option selected="selected" >All</option>
     </select>
 </p>
 
 <div id="canvas-holder">
-    <canvas id="webglcanvas" width="1200" height="800"></canvas>
+    <canvas id="webglcanvas" width="1200" height="800" style="background: url('./fujisan.jpg')"></canvas>
 </div>
 
 </body>

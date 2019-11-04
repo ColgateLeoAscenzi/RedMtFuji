@@ -64,7 +64,7 @@ var red = [1,0,0,1];
 var transform = new AffineTransform2D();
 var transformStack = [];
 
-scenes = ["background()","bigwave()","fractal()","foreground()", "oceanspray()", "drawAll()"];
+scenes = ["drawAll();"];
 
 function pushTransform() {
     transformStack.push( new AffineTransform2D(transform) );
@@ -78,13 +78,14 @@ function popTransform() {
 }
 
 function draw(){
-    gl.clearColor(0,0,0,1);
+    gl.clearColor(0,0,0,0);
     gl.clear(gl.COLOR_BUFFER_BIT);
 
     sceneToDraw = parseInt(document.getElementById("sceneselect").selectedIndex);
     console.log("Drawing image: " + document.getElementById("sceneselect").value+ " value: "+scenes[sceneToDraw]);
 
-    drawScene();
+    eval(scenes[sceneToDraw]);
+    //drawScene();
 }
 
 
@@ -138,6 +139,8 @@ function initGL() {
         gl.useProgram(prog);
 
 
+
+
         vertexAttributeLocation = gl.getAttribLocation(prog, "vertexCoords");
         transformUniformLocation = gl.getUniformLocation(prog, "coordinateTransform");
         colorAttribLocation = gl.getAttribLocation(prog, "vertexColor");
@@ -165,6 +168,7 @@ function initGL() {
 
 
 }
+
 
 /*--------------------------- animation support ----------------------------------*/
 function doFrame() {

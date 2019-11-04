@@ -30,3 +30,83 @@ function unrotate(oldPoint, rotationAngle, sideNum){
     var nC = polarToCart([nPP[0], nPP[1]-degrees(rotationAngle)-((-sumOfIntAng)/(2*sideNum))]);
     return nC;
 }
+
+
+
+function myConcat(arr1, arr2){
+
+    for(var i = 0; i < arr2.length; i++){
+        arr1.push(arr2[i]);
+    }
+
+}
+
+function mixConcat(arr1, arr2, mode){
+    var mixArr = [];
+    mixArr.length = arr1.length+arr2.length;
+    var j = 0;
+    for(var i = 0; i < arr1.length-mode-1; i+=mode){
+        for(var l = 0; l < mode; l++){
+            mixArr[j] = arr1[i+l];
+            j += 1;
+        }
+        for(var l = 0; l < mode; l++){
+            mixArr[j] = arr2[i+l];
+            j += 1;
+        }
+    }
+    // if(mode == 2){
+    //     console.log(arr1);
+    //     console.log(arr2);
+    //     console.log(mixArr);
+    // }
+
+    return mixArr;
+
+}
+
+function extendArrayWithDuplicate(arr, nbElements, nbComponents) {
+    var len = arr.length;
+
+    var larger = [];
+    //console.log(nbElements * nbComponents);
+    larger.length = nbElements * nbComponents;
+
+    for (var i = 0; i < larger.length; i++){
+        larger[i] = arr[i % len];
+
+    }
+
+    return larger;
+}
+
+
+//making the mountain bumpy
+function xnoise(line, amount){
+    return noise(line, amount, 0);
+}
+
+function ynoise(line, amount){
+    return noise(line, 0, amount);
+}
+
+function noise(line, xamount, yamount){
+    //skip the start and end point
+    console.log(line);
+    var lineOut = [];
+    lineOut.length = line.length;
+    for(var i = 0; i < line.length-1; i+=2){
+        if(i == 0 || i == line.length-2){
+            lineOut[i] = line[i];
+            lineOut[i+1] = line[i+1];
+        }
+        else{
+            lineOut[i] = line[i]+Math.random()*xamount;
+            lineOut[i+1] = line[i+1]+Math.random()*yamount;
+        }
+
+    }
+    console.log(lineOut);
+
+    return lineOut;
+}

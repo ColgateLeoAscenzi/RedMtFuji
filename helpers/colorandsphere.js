@@ -44,6 +44,31 @@ function concatColor(colors){
     return outColor;
 }
 
+function createColorGrad(startColor, endColor, numLines){
+    var colorInc = gradientColorIncrement(startColor, endColor, numLines-1);
+
+    var colorArr = [];
+    colorArr.length = numLines*COLORCOMP;
+    colorArr[0] = startColor[0];
+    colorArr[1] = startColor[1];
+    colorArr[2] = startColor[2];
+    colorArr[3] = startColor[3];
+
+
+    for(var i = 4; i < (numLines*COLORCOMP)-1; i+=4){
+        colorArr[i] = colorArr[i-4] +(colorInc[0]);
+        colorArr[i+1] = colorArr[i-3] +(colorInc[1]);
+        colorArr[i+2] = colorArr[i-2] +(colorInc[2]);
+        colorArr[i+3] = colorArr[i-1] +(colorInc[3]);
+
+    }
+    console.log(startColor);
+    console.log(colorInc);
+    console.log(endColor);
+    console.log(colorArr);
+    return colorArr;
+}
+
 
 function fixCenter(oldCoords, newC, angle, sideNum){
     newCoords = []

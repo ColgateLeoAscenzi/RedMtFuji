@@ -1,4 +1,59 @@
+const VERTCOMP = 2;
+const COLORCOMP = 4;
 
+
+function createShape(gl, draw_mode, vertices, colors, mat) {
+
+    var vertexBuf = create2DBuffer(gl, vertices);
+
+    if (colors.length/COLORCOMP != vertices.length/VERTCOMP) {
+       colors = extendArrayWithDuplicate(colors, vertices.length/VERTCOMP, COLORCOMP);
+    }
+
+    var colorBuf = create2DBuffer(gl, colors);
+
+    var shape = {
+        vertexBuffer: vertexBuf,
+        vertComponent: VERTCOMP,
+        nVerts:   vertices.length/VERTCOMP,
+        drawMode: draw_mode,
+        colorBuffer: colorBuf,
+        colorComponent: COLORCOMP,
+        // default values
+        stride: 0,
+        offset: 0,
+        isNormalized: false,
+        transform: mat,
+    };
+    return shape;
+}
+
+function create2DBuffer(gl, data) {
+
+    var aBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, aBuffer);
+    //send the data  (could be STATIC_DRAW)
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data), gl.STATIC_DRAW);
+    return aBuffer;
+}
+
+
+function drawShape(gl, aShape) {
+
+    gl.uniformMatrix3fv(transformUniformLocation, false, aShape.transform.getMat3());
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, aShape.vertexBuffer);
+    gl.vertexAttribPointer(vertexAttributeLocation,  aShape.vertComponent,
+    gl.FLOAT, aShape.isNormalized, aShape.stride, aShape.offset);
+    gl.enableVertexAttribArray(vertexAttributeLocation);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, aShape.colorBuffer);
+    gl.vertexAttribPointer(colorAttribLocation,  aShape.colorComponent,
+    gl.FLOAT, aShape.isNormalized, aShape.stride, aShape.offset);
+    gl.enableVertexAttribArray(colorAttribLocation);
+    gl.drawArrays(aShape.drawMode, 0, aShape.nVerts);
+
+}
 
 function filledShape(color, vertices, drawMode){
     //make more colours
@@ -110,7 +165,14 @@ function genTriangle(center, side, angles){
     return triCoord;
 }
 
-function bendLine(pStart, p1, p2, pEnd, drawGuide){
+function bendLine(pStart, p1, p2, pEnd, numPts, drawGuide, startColor, endColor){
+    if(endColor == undefined){
+        endColor = startColor;
+    }
+
+
+    // console.log(colorInc);
+    var newColor = createColorGrad(startColor, endColor, numPts);
 
     var control_polygon = [0, 0, pStart[0], pStart[1], p1[0], p1[1], p2[0], p2[1],
                             pEnd[0], pEnd[1]];
@@ -118,11 +180,11 @@ function bendLine(pStart, p1, p2, pEnd, drawGuide){
     if(drawGuide){
         filledShape([1,0,0,1], control_polygon.slice(2,control_polygon.length), "gl.LINE_LOOP");
     }
-    var curve_pts = getPointsOnBezierCurve(control_polygon, 2, 28);
+    var curve_pts = getPointsOnBezierCurve(control_polygon, VERTCOMP, numPts);
+    var color_pts = extendArrayWithDuplicate(startColor, numPts, COLORCOMP);
 
-	console.log(curve_pts);
 
-	return curve_pts;
+	return [curve_pts, newColor];
 }
 
 function curveTriangle(corner, side, angles, p1, p2, drawGuide){

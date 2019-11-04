@@ -4,13 +4,19 @@ function drawScene(){
         //adjust for aspect ratio
         transform.scale(0.66666666,1);
 
-        eval(scenes[sceneToDraw]);
+        // drawAll();
     popTransform();
 
 }
 
 function drawAll(){
-    for(var i = 0; i < scenes.length-1; i++){
-        eval(scenes[i]);
+    var allShapes = [];
+    var mtFujiShapes = mtFujiGen();
+
+    myConcat(allShapes, mtFujiShapes);
+
+    for(var i = 0; i < allShapes.length;i++){
+        drawShape(gl, allShapes[i]);
     }
+    console.log(allShapes);
 }

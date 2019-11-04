@@ -10,8 +10,8 @@ const A = 3;
 //assuming color with same number of component
 function gradientColorIncrement(sColor, eColor, iterations) {
    var incColor = [];
-   
-   for (var i=0; i<sColor.length; i++) 
+
+   for (var i=0; i<sColor.length; i++)
      incColor[i] = (eColor[i]-sColor[i])/iterations;
 
    return incColor;
@@ -39,11 +39,11 @@ function add(aColor, inc) {
 function huetoRGB(p, q, t) {
    if (t < 0) t += 1;
    else if (t > 1) t -= 1;
-      
+
    if (t < 1/6) return p + (q - p) * 6 * t;
    else if (t < 1/2) return q;
    else if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-      
+
    return p;
 }
 
@@ -62,7 +62,7 @@ function convertHSLtoRGB(color) {
 
    var r, g, b;
     //if saturation is 0, the color is a shade of gray
-    if(saturation === 0) 
+    if(saturation === 0)
        r = g = b = brightness;
 
     //saturation > 0
@@ -104,21 +104,21 @@ function create2DGradientShape(gl, bounds, sColor, eColor, isHorizontal, isHSL, 
       var theColor = [sColor[0], sColor[1], sColor[2], sColor[3]];
 
       var delta = 0.3;
-      var steps = Math.abs(bounds[0]-bounds[1])/delta;     
+      var steps = Math.abs(bounds[0]-bounds[1])/delta;
 
-      var colorInc = gradientColorIncrement(sColor, eColor, steps); 
+      var colorInc = gradientColorIncrement(sColor, eColor, steps);
       //console.log("color info really", steps, colorInc, isHSL);
 
-      // !!!! IMPORTANT  !!!!  +=0.3 because you need to draw lines very close 
+      // !!!! IMPORTANT  !!!!  +=0.3 because you need to draw lines very close
       //Try to change to +1 you will see an artifact  --> COSC201 floating point representation
       //for (var i =  bounds[0]; i <  bounds[1]; i+=0.3) {
       for (var i =  bounds[0]; i <  bounds[1]; i+=delta) {
                    //x_i,      ymin, x_i,    ymax
          vertices.push(i, bounds[2],   i,    bounds[3]);
-        
+
          var color = theColor;
 
-         if (isHSL !== undefined && isHSL) 
+         if (isHSL !== undefined && isHSL)
             color = convertHSLtoRGB(theColor);
 
          colors.push(color[R], color[G], color[B], color[A]);   //for each vertex of line
@@ -133,22 +133,12 @@ console.log("\n color end", theColor[0]);
 console.log("\n bf of lines", vertices.length/4);
 
 console.log("line1", vertices[0], vertices[1], "to", vertices[2], vertices[3]);
-console.log("linen", vertices[vertices.length-4], vertices[vertices.length-3], "to", 
+console.log("linen", vertices[vertices.length-4], vertices[vertices.length-3], "to",
                      vertices[vertices.length-2], vertices[vertices.length-1]);
 */
 
      return create2DShape(gl, gl.LINES, vertices, colors, mat);
 
-   } else 
+   } else
      console.log("Return nothing: you need to add this feature");
 }
- 
-
-
-
-
-
-
-
-
-
