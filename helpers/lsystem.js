@@ -2,7 +2,7 @@
 var rule1 = {
 	"in": "1",
 	"out": "1",
-	"chance": "0.6"
+	"chance": "0.8"
 }
 var rule2 = {
 	"in": "0",
@@ -12,7 +12,7 @@ var rule2 = {
 var rule3 = {
 	"in": "1",
 	"out": "11",
-	"chance": "0.4"
+	"chance": "0.2"
 }
 var rule4 = {
 	"in": "0",
