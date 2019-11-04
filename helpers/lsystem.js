@@ -1,49 +1,37 @@
 
 var rule1 = {
-	"in": "1",
-	"out": "1",
-	"chance": "0.8"
+	"in": "X",
+	"out": "X+YF+",
+	"chance": "1"
 }
 var rule2 = {
-	"in": "0",
-	"out": "1[0]2",
-	"chance": "0.8"
+	"in": "Y",
+	"out": "-LX-Y",
+	"chance": "1"
 }
-var rule3 = {
-	"in": "1",
-	"out": "11",
-	"chance": "0.2"
-}
-var rule4 = {
-	"in": "0",
-	"out": "1[0]",
-	"chance": "0.2"
-}
-var rule5 = {
-	"in": "2",
-	"out": "1[0]0",
-	"chance": "0.5"
-}
-var rule6 = {
-	"in": "2",
-	"out": "1[0]",
-	"chance": "0.5"
-}
+//
+// var rule2 = {
+// 	"in": "Y",
+// 	"out": "X+YF+",
+// 	"chance": "1"
+// }
+
 
 var Ldefinitions = new Object();
-Ldefinitions["0"] = "drawTriangle(distance, darkBlue, currentPos);";
-Ldefinitions["1"] =  "drawTriangle(distance, tan, currentPos);";
-Ldefinitions["3"] =  "changeAngle(90, currentPos);drawTriangle(distance*3, lightBlue, currentPos);changeAngle(-90, currentPos);";
-
-Ldefinitions["["] = "pushCoords(transformStack, currentPos);changeAngle(0, currentPos);"+
-          			"";
-Ldefinitions["]"] = "popCoords(transformStack, currentPos);changeAngle(-90, currentPos);"+
-          			"";
+Ldefinitions["F"] = "drawTriangle(distance, tan, currentPos, 'gl.TRIANGLE_FAN', false);drawTriangle(distance, darkBlue, currentPos, 'gl.LINE_LOOP', true);";
+Ldefinitions["L"] = "drawTriangle(distance, tan, currentPos, 'gl.TRIANGLE_FAN', false);drawTriangle(distance, darkBlue, currentPos, 'gl.LINE_LOOP', true);";
+Ldefinitions["+"] =  "changeAngle(-90, currentPos)";
+Ldefinitions["-"] =  "changeAngle(90, currentPos)";
+//
+// Ldefinitions["["] = "pushCoords(transformStack, currentPos);"+
+//           			"";
+// Ldefinitions["]"] = "popCoords(transformStack, currentPos);"+
+//           			"";
 
 var Lsystem = {
-	"rules": [rule1, rule2, rule3, rule4, rule5, rule6],
-	"axiom": "30",
-	"alphabet": ["0","1","2","[","]"],
+	"rules": [rule1, rule2],
+	"axiom": "FX",
+	"alphabet": ["X","F", "Y","+","-"],
 	"definitions": Ldefinitions
 }
 
@@ -98,6 +86,7 @@ function selectRule(currChar){
 		}
 	}
 	// console.log(chances);
+	//
 
 
 
@@ -111,7 +100,7 @@ function drawFractal(generations, currentPosN){
 	word = "";
 	for(var i = 0; i < generations; i++){
 		word= generateIteration(i, word);
-		console.log(word);
+		// console.log(word);
 	}
 	var transformStack = [];
     pushTransform();
@@ -122,7 +111,7 @@ function drawFractal(generations, currentPosN){
         for(var i = 0; i < newWord.length; i++){
 				var definitionsHash = Lsystem.definitions;
                 var newRule = eval(definitionsHash[newWord[i]])
-				distance -= 0.01;
+				//distance -= 0.01;
 
         }
     popTransform();
@@ -137,19 +126,26 @@ function drawForward(distance, color, currentPos){
     currentPos[1]+= Math.sin(radians(currentPos[2]))*distance;
 }
 
-function drawTriangle(distance, color, currentPos){
+function drawTriangle(distance, color, currentPos, drawMode, move){
     if(color == undefined){
         color = [1,0,0,1];
     }
+	if(drawMode == undefined){
+		drawMode = "gl.TRIANGLE_FAN";
+	}
 	//currentPos[0] -= Math.cos(radians(currentPos[2]))*distance/2;
 	//currentPos[1] -= Math.sin(radians(currentPos[2]))*distance/2;
 	pushTransform();
 		transform.rotateAbout(currentPos[0], currentPos[1], radians(currentPos[2]));
-	    filledTriangle(color, genTriangle([currentPos[0],currentPos[1]], distance, [90,30,60]));
-	    currentPos[0]+= Math.cos(radians(currentPos[2]))*distance;
-	    currentPos[1]+= Math.sin(radians(currentPos[2]))*distance;
+	    filledTriangle(color, genTriangle([currentPos[0],currentPos[1]], distance, [90,30,60]), drawMode);
+		if(move){
+			currentPos[0]+= Math.cos(radians(currentPos[2]))*distance;
+			currentPos[1]+= Math.sin(radians(currentPos[2]))*distance;
+		}
+
 	popTransform();
 }
+
 
 function changeAngle(newAngle, currentPos){
     currentPos[2] += newAngle;
