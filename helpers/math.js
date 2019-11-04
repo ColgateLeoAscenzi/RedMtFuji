@@ -92,7 +92,7 @@ function ynoise(line, amount){
 
 function noise(line, xamount, yamount){
     //skip the start and end point
-    console.log(line);
+//    console.log(line);
     var lineOut = [];
     lineOut.length = line.length;
     for(var i = 0; i < line.length-1; i+=2){
@@ -106,7 +106,7 @@ function noise(line, xamount, yamount){
         }
 
     }
-    console.log(lineOut);
+//    console.log(lineOut);
 
     return lineOut;
 }

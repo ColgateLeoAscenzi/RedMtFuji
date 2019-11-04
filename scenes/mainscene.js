@@ -12,8 +12,10 @@ function drawScene(){
 function drawAll(){
     var allShapes = [];
     var mtFujiShapes = mtFujiGen();
+	var borderShapes = borderGen();
 
     myConcat(allShapes, mtFujiShapes);
+	myConcat(allShapes, borderShapes);
 
     for(var i = 0; i < allShapes.length;i++){
         drawShape(gl, allShapes[i]);

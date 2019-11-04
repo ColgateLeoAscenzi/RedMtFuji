@@ -178,7 +178,7 @@ function bendLine(pStart, p1, p2, pEnd, numPts, drawGuide, startColor, endColor)
                             pEnd[0], pEnd[1]];
 
     if(drawGuide){
-        filledShape([1,0,0,1], control_polygon.slice(2,control_polygon.length), "gl.LINE_LOOP");
+        filledShape([0,1,0,1], control_polygon.slice(2,control_polygon.length), "gl.LINE_LOOP");
     }
     var curve_pts = getPointsOnBezierCurve(control_polygon, VERTCOMP, numPts);
     var color_pts = extendArrayWithDuplicate(startColor, numPts, COLORCOMP);
@@ -200,24 +200,5 @@ function curveTriangle(corner, side, angles, p1, p2, drawGuide){
 	return newVert;
 }
 
-function waveFractal(generations, currentP){
-    // pushTransform();
-        // transform.scale(-1,1);
-        var generations = generations
-        var currentPosN = currentP;
-        // pushTransform();
-            // transform.translate(0,0);
-            // transform.scale(0.04);
-            drawFractal(generations, currentP);
-    //     popTransform();
-    // popTransform();
 
-}
 
-function spawnCrests(points){
-    console.log(points);
-    for(var i = 0; i < points.length-1; i+=6){
-        //filledTriangle([1,0,0,1], genTriangle([points[i],points[i+1]], 0.2, [60,60,60]));
-        //waveFractal(8, [points[i], points[i+1], 0]);
-    }
-}

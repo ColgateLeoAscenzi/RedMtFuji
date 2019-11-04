@@ -62,10 +62,10 @@ function createColorGrad(startColor, endColor, numLines){
         colorArr[i+3] = colorArr[i-1] +(colorInc[3]);
 
     }
-    console.log(startColor);
-    console.log(colorInc);
-    console.log(endColor);
-    console.log(colorArr);
+//    console.log(startColor);
+//    console.log(colorInc);
+//    console.log(endColor);
+//    console.log(colorArr);
     return colorArr;
 }
 
