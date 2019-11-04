@@ -10,5 +10,11 @@ function bigwave(){
 
 //high level fractal
 function fractal(){
-
+    var generations = 5;
+    var currentPosN = [0,0,0];
+    pushTransform();
+        transform.translate(-1,0);
+        transform.scale(0.2);
+        waveFractal(generations, currentPosN);
+    popTransform();
 }

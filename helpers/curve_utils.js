@@ -30,7 +30,7 @@ function getPointOnBezierCurve(points, offset, t) {
 }
 
 
-// Need an header:  
+// Need an header:
 //
 //4 control points
 function getPointsOnBezierCurve(points, offset, numPoints) {
@@ -38,18 +38,15 @@ function getPointsOnBezierCurve(points, offset, numPoints) {
    //console.log("bezier");
    var curve_pts = [];
 
-   curve_pts.push(points[X], points[Y]);
+   //curve_pts.push(points[X], points[Y]);
 
    for (var i = 0; i < numPoints; ++i) {
       var t = i / (numPoints - 1);
       var aPt = getPointOnBezierCurve(points, offset, t);
-      
+
       curve_pts.push(aPt[X], aPt[Y]);
    }
 
    //console.log(curve_pts);
    return curve_pts;
 }
-
-
-

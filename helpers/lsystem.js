@@ -1,75 +1,69 @@
 
 var rule1 = {
 	"in": "1",
-	"out": "11"
+	"out": "1",
+	"chance": "0.6"
 }
 var rule2 = {
 	"in": "0",
-	"out": "1[0]0"
+	"out": "1[0]2",
+	"chance": "0.8"
 }
+var rule3 = {
+	"in": "1",
+	"out": "11",
+	"chance": "0.4"
+}
+var rule4 = {
+	"in": "0",
+	"out": "1[0]",
+	"chance": "0.2"
+}
+var rule5 = {
+	"in": "2",
+	"out": "1[0]0",
+	"chance": "0.5"
+}
+var rule6 = {
+	"in": "2",
+	"out": "1[0]",
+	"chance": "0.5"
+}
+
 var Ldefinitions = new Object();
-// Ldefinitions["0"] = "drawLine(currentPos[0],currentPos[1],currentPos[2], startSize, [1,0,0,1]);"+
-// 		"currentPos[0]+= Math.cos(radians(currentPos[2]))*startSize;"+
-// 		"currentPos[1]+= Math.sin(radians(currentPos[2]))*startSize;";
-// Ldefinitions["1"] =  "drawLine(currentPos[0],currentPos[1],currentPos[2], startSize, [0,0,1,1]);"+
-//          "currentPos[0]+= Math.cos(radians(currentPos[2]))*startSize;"+
-//           "currentPos[1]+= Math.sin(radians(currentPos[2]))*startSize;";
-//
-// Ldefinitions["["] = "var copy = [currentPos[0], currentPos[1], currentPos[2]];"+
-//           "transformStack.push(copy);"+
-//           "currentPos[2] += 45;";
-// Ldefinitions["]"] =  "currentPos = transformStack.pop();"+
-//           "currentPos[2] -= 45;";
+Ldefinitions["0"] = "drawTriangle(distance, darkBlue, currentPos);";
+Ldefinitions["1"] =  "drawTriangle(distance, tan, currentPos);";
+Ldefinitions["3"] =  "changeAngle(90, currentPos);drawTriangle(distance*3, lightBlue, currentPos);changeAngle(-90, currentPos);";
+
+Ldefinitions["["] = "pushCoords(transformStack, currentPos);changeAngle(0, currentPos);"+
+          			"";
+Ldefinitions["]"] = "popCoords(transformStack, currentPos);changeAngle(-90, currentPos);"+
+          			"";
 
 var Lsystem = {
-	"rules": [rule1, rule2],
-	"axiom": "0",
-	"alphabet": ["0","1","[","]"],
-	"definitions": undefined
+	"rules": [rule1, rule2, rule3, rule4, rule5, rule6],
+	"axiom": "30",
+	"alphabet": ["0","1","2","[","]"],
+	"definitions": Ldefinitions
 }
 
 
-
-
-function generateIteration(){
+function generateIteration(generation, word){
 	console.log(Lsystem);
-	var addDiv = document.createElement("div");
-	addDiv.id = "gen"+generation;
 	if(generation == 0){
-		if(mode == "text"){
-			addDiv.append(Lsystem.axiom);
-			document.getElementById("string-container").append(addDiv);
-		}
+		word = Lsystem.axiom;
 		generation++;
 	}
 	else{
-		word = nextGeneration();
-		if(mode == "text"){
-			addDiv.append(word);
-			document.getElementById("string-container").append(addDiv);
-		}
-
+		word = nextGeneration(word);
 		generation++;
 	}
 
-	// drawFractalDemo(word);
-	draw();
-
+	return word;
 }
 
-function resetIteration(){
-	  var bodyObj = document.getElementById("string-container");
-	  while (bodyObj.firstChild) {
-		bodyObj.removeChild(bodyObj.firstChild);
-	  }
-	word = Lsystem.axiom;
-	generation=0;
 
-
-
-}
-
-function nextGeneration(){
+function nextGeneration(word){
 	var outWord = ""
 	var added = false;
 	for(var i = 0; i < word.length; i++){
@@ -77,8 +71,12 @@ function nextGeneration(){
 	 	added = false;
 		for(var j = 0; j < Lsystem.rules.length;j++){
 			if(Lsystem.rules[j].in == currChar){
-				outWord += Lsystem.rules[j].out;
+				var currRule = selectRule(currChar);
+				// console.log("Current rule: ")
+				// console.log(currRule);
+				outWord += currRule["out"];
 				added = true;
+				break;
 			}
 		}
 		if(!added){
@@ -88,119 +86,80 @@ function nextGeneration(){
 	return outWord
 }
 
-function submitRules(){
-	var newRules = [];
-	Lsystem.alphabet = undefined;
-	Lsystem.axiom = undefined;
-	Lsystem.rules = undefined;
-	Lsystem.definitions = undefined;
-	Ldefinitions = new Object();
-
-
-
-	Lsystem.alphabet = document.getElementById("alphabetIn").value.split(",");
-	Lsystem.axiom = document.getElementById("axiomIn").value;
-	var rulesArr = document.getElementById("rulesIn").value.split(",");
-	for(var i = 0; i < rulesArr.length; i++){
-		var currRuleArr = rulesArr[i].split(":");
-		var newRule = {"in":null, "out":null};
-		newRule.in = currRuleArr[0];
-		newRule.out = currRuleArr[1];
-		newRules.push(newRule);
-
-	}
-	Lsystem.rules = newRules;
-
-	var rules = "";
-	for(var i = 0; i < Lsystem.rules.length; i++){
-		if(i == Lsystem.rules.length-1){
-			rules += Lsystem.rules[i].in + " -> " + Lsystem.rules[i].out
+function selectRule(currChar){
+	var chances = [0,0,0,0,0,0,0,0,0,0];
+	var count = 0;
+	for(var j = 0; j < Lsystem.rules.length;j++){
+		if(Lsystem.rules[j].in == currChar){
+			for(var i = 0; i < Lsystem.rules[j].chance*10; i++){
+				chances[count] = Lsystem.rules[j];
+				count += 1;
+			}
 		}
-		else{
-			rules += Lsystem.rules[i].in + " -> " + Lsystem.rules[i].out+ ", "
-		}
-
-
 	}
-	document.getElementById("rules").innerHTML = "Alphabet = ("+ Lsystem.alphabet + ")<br>Rules: ("+rules+")<br>Axiom: ("+Lsystem.axiom+") ";
+	// console.log(chances);
 
-	//<button onClick = "submitRules()">Add L-System</button>
-	setupCode();
+
+
+	var rand = Math.round(Math.random() * (count-1));
+	return chances[rand];
 
 }
 
-function setupCode(){
-	var defContainer = document.createElement("div");
-	defContainer.id = "definitionsAssign";
-	document.getElementById("lsystem-container").append(defContainer);
-	console.log(Lsystem.alphabet);
-	for(var i = 0; i < Lsystem.alphabet.length; i++){
-		var addDiv = document.createElement("div");
-		addDiv.innerHTML = "  "+Lsystem.alphabet[i]+"  : <input type ='text' value = 'Enter an encoded rule' id = 'definition+"+Lsystem.alphabet[i]+"'>"
-		document.getElementById("definitionsAssign").append(addDiv);
+
+function drawFractal(generations, currentPosN){
+	word = "";
+	for(var i = 0; i < generations; i++){
+		word= generateIteration(i, word);
+		console.log(word);
 	}
-	var submitButton = document.createElement("div");
-	submitButton.innerHTML = '<button onClick = "createDefinitions()">Submit Definitions</button>'
-	definitionsAssign.append(submitButton);
-
-
-}
-
-function createDefinitions(){
-
-    for(var i = 0; i < Lsystem.alphabet.length; i++){
-		Ldefinitions[Lsystem.alphabet[i]] = document.getElementById("definition+"+Lsystem.alphabet[i]).value;
-	}
-
-	console.log("Submitted!");
-	console.log(Ldefinitions);
-	Lsystem.definitions = Ldefinitions;
-
-	document.getElementById("definitionsAssign").remove();
-
-}
-
-var startSize = 0.01;
-var transformStack = [];
-var currentPos = [0,0,0];
-
-function drawFractalDemo(word){
+	var transformStack = [];
     pushTransform();
 
-	startSize = 0.01;
-    //adjust for canvas aspect ratio
-        // transform.scale(0.66666,1);
-		// transform.translate(0,-0.8);
-        currentPos = [0,0,0];
-        transformStack = [];
+        currentPos = currentPosN;
+		var distance = 1;
         var newWord = word
         for(var i = 0; i < newWord.length; i++){
 				var definitionsHash = Lsystem.definitions;
                 var newRule = eval(definitionsHash[newWord[i]])
-                // console.log(newRule);
-				// eval(newRule);
+				distance -= 0.01;
+
         }
     popTransform();
 }
 
-function drawForward(distance, color){
+function drawForward(distance, color, currentPos){
     if(color == undefined){
         color = [1,0,0,1];
     }
-    drawLine(currentPos[0],currentPos[1],currentPos[2], startSize, color);
-    currentPos[0]+= Math.cos(radians(currentPos[2]))*startSize;
-    currentPos[1]+= Math.sin(radians(currentPos[2]))*startSize;
+    drawLine(currentPos[0],currentPos[1],currentPos[2], distance, color);
+    currentPos[0]+= Math.cos(radians(currentPos[2]))*distance;
+    currentPos[1]+= Math.sin(radians(currentPos[2]))*distance;
 }
 
-function changeAngle(newAngle){
+function drawTriangle(distance, color, currentPos){
+    if(color == undefined){
+        color = [1,0,0,1];
+    }
+	//currentPos[0] -= Math.cos(radians(currentPos[2]))*distance/2;
+	//currentPos[1] -= Math.sin(radians(currentPos[2]))*distance/2;
+	pushTransform();
+		transform.rotateAbout(currentPos[0], currentPos[1], radians(currentPos[2]));
+	    filledTriangle(color, genTriangle([currentPos[0],currentPos[1]], distance, [90,30,60]));
+	    currentPos[0]+= Math.cos(radians(currentPos[2]))*distance;
+	    currentPos[1]+= Math.sin(radians(currentPos[2]))*distance;
+	popTransform();
+}
+
+function changeAngle(newAngle, currentPos){
     currentPos[2] += newAngle;
 }
 
-function pushCoords(){
-    var copy = [currentPos[0], currentPos[1], currentPos[2]];
+function pushCoords(transformStack, currentPosN){
+    var copy = [currentPosN[0], currentPosN[1], currentPosN[2]];
     transformStack.push(copy);
 }
 
-function popCoords(){
+function popCoords(transformStack, currentPosN){
     currentPos = transformStack.pop();
 }
