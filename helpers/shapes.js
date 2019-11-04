@@ -1,25 +1,92 @@
-// ----------------- Multipurpose buffers ---------------------//
-//disk
-function initBuffers(){
-    diskCoordsVBO = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, diskCoordsVBO);
-    var circleCoords = new Float32Array( 64 );
-    for (var i = 0; i < 32; i++) {
-        var angle = (2*Math.PI)/32 * i;
-        circleCoords[2*i] = 0.5 * Math.cos(angle);
-        circleCoords[2*i+1] = 0.5 * Math.sin(angle);
+
+
+function filledShape(color, vertices, drawMode){
+    //make more colours
+    var newColor = [];
+    if(color.length == 4){
+        newColor = uniformColorGen(color, vertices.length/2);
     }
-    gl.bufferData(gl.ARRAY_BUFFER, circleCoords, gl.STATIC_DRAW);
-    diskColorVBO = gl.createBuffer()
+    else{
+        newColor = color;
+    }
 
-    //square
-    squareCoordsVBO = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, squareCoordsVBO);
-    var squareCoords = new Float32Array( [ -0.5,-0.5, 0.5,-0.5, 0.5,0.5, -0.5,0.5 ]);
-    gl.bufferData(gl.ARRAY_BUFFER, squareCoords, gl.STATIC_DRAW);
-    squareColorVBO = gl.createBuffer()
+    var vertexData = new Float32Array(vertices);
 
-    //triangle
+    vertexBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, vertexData, gl.STATIC_DRAW);
+
+    colorBuffer = gl.createBuffer()
+    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(newColor), gl.STATIC_DRAW);
+
+    gl.uniformMatrix3fv(transformUniformLocation, false, transform.getMat3());
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+    gl.vertexAttribPointer(vertexAttributeLocation, 2, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(vertexAttributeLocation);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+    gl.vertexAttribPointer(colorAttribLocation, 4, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(colorAttribLocation);
+
+    gl.drawArrays(eval(drawMode), 0, vertices.length/2);
+
+}
+// -------------- FILLED SHAPE FUNCTIONS -----------------------//
+function filledTriangle(color, vertices){
+    var newColor = [];
+    if(color.length == 4){
+        newColor = uniformColorGen(color, 3);
+    }
+    else{
+        newColor = color;
+    }
+
+    vertexBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+    var triangleCoords = new Float32Array(vertices);
+    gl.bufferData(gl.ARRAY_BUFFER, triangleCoords, gl.STATIC_DRAW);
+    colorBuffer = gl.createBuffer()
+
+    gl.uniformMatrix3fv(transformUniformLocation, false, transform.getMat3());
+    //position
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+    gl.vertexAttribPointer(vertexAttributeLocation, 2, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(vertexAttributeLocation);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(newColor), gl.STATIC_DRAW);
+    gl.vertexAttribPointer(colorAttribLocation, 4, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(colorAttribLocation);
+
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+}
+
+function drawLine(sx, sy, angle, linelength, mcolor){
+    var newColor =(uniformColorGen(mcolor, 2));
+
+
+    var vertices = [sx,sy, sx+linelength*Math.cos(radians(angle)), sy+linelength*Math.sin(radians(angle))];
+
+    lineVBO = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, lineVBO);
+    var lineCoords = new Float32Array(vertices);
+    gl.bufferData(gl.ARRAY_BUFFER, lineCoords, gl.STATIC_DRAW);
+
+    lineColorVBO = gl.createBuffer()
+    gl.uniformMatrix3fv(transformUniformLocation, false, transform.getMat3());
+    //position
+    gl.bindBuffer(gl.ARRAY_BUFFER, lineVBO);
+    gl.vertexAttribPointer(vertexAttributeLocation, 2, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(vertexAttributeLocation);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, lineColorVBO);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(newColor), gl.STATIC_DRAW);
+    gl.vertexAttribPointer(colorAttribLocation, 4, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(colorAttribLocation);
+
+    gl.drawArrays(gl.LINES, 0, 2);
 
 }
 
@@ -36,28 +103,28 @@ function filledTriangle(color, vertices){
 
     //transform
 
-    triangleCoordsVBO = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, triangleCoordsVBO);
+    vertexBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
     var triangleCoords = new Float32Array(vertices);
     gl.bufferData(gl.ARRAY_BUFFER, triangleCoords, gl.STATIC_DRAW);
-    triangleColorVBO = gl.createBuffer()
+    colorBuffer = gl.createBuffer()
 
 
 
     gl.uniformMatrix3fv(transformUniformLocation, false, transform.getMat3());
     //position
-    gl.bindBuffer(gl.ARRAY_BUFFER, triangleCoordsVBO);
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
     gl.vertexAttribPointer(vertexAttributeLocation, 2, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(vertexAttributeLocation);
 
 	console.log(newColor);
-	
-    gl.bindBuffer(gl.ARRAY_BUFFER, triangleColorVBO);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(newColor), gl.STATIC_DRAW);
     gl.vertexAttribPointer(colorAttribLocation, 4, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(colorAttribLocation);
 	console.log(vertices);
-	
+
     gl.drawArrays(gl.LINE_LOOP, 0, vertices.length/2);
 }
 
@@ -202,7 +269,7 @@ function genTriangle(corner, side, angles){
 function bendLine(A, B, C){
 	var newVert = [];
 	var b = C[1]-(((C[1]-B[1])/(C[0]-B[0]))*C[0]);
-	
+
 	for(var y = B[1]; y< C[1]; y+= (C[1]-B[1])/50){
 		newVert.push(((y-b)*(C[0]-B[0]))/(C[1]-B[1]));
 		newVert.push(y);
@@ -217,9 +284,9 @@ function bendLine(A, B, C){
 			newVert[i] = newVert[i] - 0.0001*(100-i)*(-(100-i));
 			newVert[i+1] = newVert[i+1];
 		}
-		
-		
-		
+
+
+
 	}
 
 	return newVert;

@@ -144,8 +144,7 @@ function initGL() {
         vertexAttributeBuffer = gl.createBuffer();
         colorAttribBuffer = gl.createBuffer();
 
-        //sets up the buffers for default shapes very important!!
-        initBuffers();
+
 
     }
     catch (e){
