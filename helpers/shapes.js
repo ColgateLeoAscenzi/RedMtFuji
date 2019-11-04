@@ -116,7 +116,7 @@ function bendLine(pStart, p1, p2, pEnd, drawGuide){
                             pEnd[0], pEnd[1]];
 
     if(drawGuide){
-        filledShape([0,1,0,1], control_polygon.slice(2,control_polygon.length), "gl.LINE_LOOP");
+        filledShape([1,0,0,1], control_polygon.slice(2,control_polygon.length), "gl.LINE_LOOP");
     }
     var curve_pts = getPointsOnBezierCurve(control_polygon, 2, 28);
 

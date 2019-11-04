@@ -3,6 +3,8 @@
 //HIGH LEVEL WAVE PIECES
 function bigwave(){
     pushTransform();
+        // transform.scale(0.8);
+        // transform.translate(-0.1,-0.3);
         waveBody();
     popTransform();
 }
