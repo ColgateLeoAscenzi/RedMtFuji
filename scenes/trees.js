@@ -2,19 +2,19 @@ function treeGen(){
     var objArr = [];
 
 
-    pushTransform();
-    //the spawn area for the trees
+    // pushTransform();
+    // //the spawn area for the trees
         var gridV = [-0.94,-0.89, -0.94, -0.65, -0.6,-0.5, -0.2, -0.25, -0.18,-0.4, -0.19,-0.52,
                     -0.1,-0.62, 0,-0.65, 0.3, -0.76, 0.5, -0.8, 0.4, -0.85];
-        var gridC =  extendArrayWithDuplicate([1,0,0,1], gridV.length/VERTCOMP, COLORCOMP) ;
-
-        objArr[0] = createShape(gl,
-            gl.LINE_LOOP,
-            gridV,
-            gridC,
-            transform.translate(0,0)
-        );
-    popTransform();
+    //     var gridC =  extendArrayWithDuplicate([1,0,0,1], gridV.length/VERTCOMP, COLORCOMP) ;
+    //
+    //     objArr[0] = createShape(gl,
+    //         gl.LINE_LOOP,
+    //         gridV,
+    //         gridC,
+    //         transform.translate(0,0)
+    //     );
+    // popTransform();
 
     var boundingGrid = [];
     for(var i = 0; i < gridV.length-1; i+=2){
@@ -22,8 +22,8 @@ function treeGen(){
         boundingGrid.push(temp);
     }
 
-    var plantedTreeGoal = 1000;
-    var plantedTrees = 1;
+    var plantedTreeGoal = 3000;
+    var plantedTrees = 0;
     while (plantedTrees < plantedTreeGoal){
         pushTransform();
 
