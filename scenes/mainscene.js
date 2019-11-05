@@ -13,7 +13,9 @@ function drawAll(){
     var allShapes = [];
     var mtFujiShapes = mtFujiGen();
 	var borderShapes = borderGen();
-
+    var backgroundShapes = backgroundGen();
+    
+    myConcat(allShapes, backgroundShapes);
     myConcat(allShapes, mtFujiShapes);
 	myConcat(allShapes, borderShapes);
 
