@@ -15,13 +15,13 @@ function drawAll(){
 	var borderShapes = borderGen();
     var backgroundShapes = backgroundGen();
     var cloudShapes = cloudGen();
-    // var treeShapes = treeGen();
+    var treeShapes = treeGen();
 
     myConcat(allShapes, backgroundShapes);
     myConcat(allShapes, mtFujiShapes);
 	myConcat(allShapes, borderShapes);
     myConcat(allShapes, cloudShapes);
-    // myConcat(allShapes, treeShapes);
+    myConcat(allShapes, treeShapes);
 
     for(var i = 0; i < allShapes.length;i++){
         drawShape(gl, allShapes[i]);
