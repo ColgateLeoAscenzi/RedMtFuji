@@ -1,17 +1,17 @@
 var colors = {
-    "darkBrown":[64/255,35/255,19/255, 1],
-    "mediumBrown":[103/255,40/255,20/255, 1],
-	"lightBrown":[123/255,45/255,20/255, 1],
-	"darkRed":[165/255,55/255,21/255, 1],
-    "mediumRed":[165/255,55/255,21/255, 1],
-	"lighterRed":[170/255,62/255,22/255, 1],
-	"tan": [201/255,171/255,131/255, 1],
-    "tanGreen": [115/255,112/255,72/255,1],
-    "mediumGreen": [83/255,102/255,74/255,1],
+    "darkBrown":[64/255,35/255,19/255, 0.99],
+    "mediumBrown":[103/255,40/255,20/255, 0.99],
+	"lightBrown":[123/255,45/255,20/255, 0.99],
+	"darkRed":[165/255,55/255,21/255, 0.99],
+    "mediumRed":[165/255,55/255,21/255, 0.99],
+	"lighterRed":[170/255,62/255,22/255, 0.99],
+	"tan": [201/255,171/255,131/255, 0.99],
+    "tanGreen": [115/255,112/255,72/255,0.99],
+    "mediumGreen": [83/255,102/255,74/255,0.99],
     "darkGreen": [41/255,58/255,39/255,1],
-    "skyBlue": [103/255,116/255,97/255,1],
-    "darkBlue": [25/255,32/255,42/255,1],
-    "cloudWhite": [180/255,150/255,72/115,1]
+    "skyBlue": [103/255,116/255,97/255,0.99],
+    "darkBlue": [25/255,32/255,42/255,0.99],
+    "cloudWhite": [180/255,150/255,72/115,0.99]
 }
 //Draws background with mount fuji and sky
 function mtFujiGen(){
@@ -124,7 +124,7 @@ function mtFujiGen(){
 		fujiCrestC1 = [];
 
 	    //mt fuji bottom
-       var leftBottom = bendLine([-0.425,-0.40], [-0.42, -0.45], [-1.4,-0.84], [-1.74,-0.99], 500,  true, colors.tanGreen, colors.mediumGreen);
+       var leftBottom = bendLine([-0.425,-0.40], [-0.42, -0.45], [-1.4,-0.84], [-1.74,-0.99], 500,  false, colors.tanGreen, colors.mediumGreen);
        fujiCrestV = xnoise(leftBottom[0], 0.01);
        fujiCrestC = leftBottom[1];
 

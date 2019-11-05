@@ -111,6 +111,20 @@ function noise(line, xamount, yamount){
     return lineOut;
 }
 
+function truenoise(line, xamount, yamount){
+    //skip the start and end point
+//    console.log(line);
+    var lineOut = [];
+    lineOut.length = line.length;
+    for(var i = 0; i < line.length-1; i+=2){
+        lineOut[i] = line[i]+Math.random()*xamount;
+        lineOut[i+1] = line[i+1]+Math.random()*yamount;
+    }
+//    console.log(lineOut);
+
+    return lineOut;
+}
+
 //https://github.com/substack/point-in-polygon
 function inside(point, vs) {
     // ray-casting algorithm based on

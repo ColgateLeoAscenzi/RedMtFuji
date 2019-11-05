@@ -2,16 +2,46 @@ function backgroundGen(){
     var objArr = [];
     pushTransform();
 
-		var borderV = [-1,-1, -1,1, 1,1, 1, -1];
-		var borderC = [];
-        myConcat(borderC, colors.skyBlue);
-        myConcat(borderC, colors.darkBlue);
-        myConcat(borderC, colors.darkBlue);
-        myConcat(borderC, colors.skyBlue);
+		var backgroundV = [-1,0.84, -1,1, 1,1, 1, 0.84];
+		var backgroundC = [];
+        myConcat(backgroundC, colors.darkBlue);
+        myConcat(backgroundC, colors.darkBlue);
+        myConcat(backgroundC, colors.darkBlue);
+        myConcat(backgroundC, colors.darkBlue);
         objArr[0] = createShape(gl,
             gl.TRIANGLE_FAN,
-            borderV,
-            borderC,
+            backgroundV,
+            backgroundC,
+            transform.translate(0,0)
+        );
+    popTransform();
+
+    pushTransform();
+        backgroundV = [-1,0.76, -1,0.84, 1,0.84, 1, 0.76];
+        backgroundC = [];
+        myConcat(backgroundC, colors.skyBlue);
+        myConcat(backgroundC, colors.darkBlue);
+        myConcat(backgroundC, colors.darkBlue);
+        myConcat(backgroundC, colors.skyBlue);
+        objArr[1] = createShape(gl,
+            gl.TRIANGLE_FAN,
+            backgroundV,
+            backgroundC,
+            transform.translate(0,0)
+        );
+    popTransform();
+    pushTransform();
+
+        backgroundV = [-1,-1, -1,0.76, 1,0.76, 1, -1];
+        backgroundC = [];
+        myConcat(backgroundC, colors.skyBlue);
+        myConcat(backgroundC, colors.skyBlue);
+        myConcat(backgroundC, colors.skyBlue);
+        myConcat(backgroundC, colors.skyBlue);
+        objArr[2] = createShape(gl,
+            gl.TRIANGLE_FAN,
+            backgroundV,
+            backgroundC,
             transform.translate(0,0)
         );
     popTransform();
