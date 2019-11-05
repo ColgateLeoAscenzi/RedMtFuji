@@ -14,12 +14,14 @@ function drawAll(){
     var mtFujiShapes = mtFujiGen();
 	var borderShapes = borderGen();
     var backgroundShapes = backgroundGen();
-    var treeShapes = treeGen();
+    var cloudShapes = cloudGen();
+    // var treeShapes = treeGen();
 
     myConcat(allShapes, backgroundShapes);
     myConcat(allShapes, mtFujiShapes);
 	myConcat(allShapes, borderShapes);
-    myConcat(allShapes, treeShapes);
+    myConcat(allShapes, cloudShapes);
+    // myConcat(allShapes, treeShapes);
 
     for(var i = 0; i < allShapes.length;i++){
         drawShape(gl, allShapes[i]);

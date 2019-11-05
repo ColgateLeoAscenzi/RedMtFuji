@@ -4,10 +4,11 @@ function treeGen(){
 
     // pushTransform();
     // //the spawn area for the trees
-        var gridV = [-0.94,-0.89, -0.94, -0.65, -0.6,-0.5, -0.2, -0.25, -0.18,-0.4, -0.19,-0.52,
-                    -0.1,-0.62, 0,-0.65, 0.3, -0.76, 0.5, -0.8, 0.4, -0.85];
-    //     var gridC =  extendArrayWithDuplicate([1,0,0,1], gridV.length/VERTCOMP, COLORCOMP) ;
-    //
+    var gridV = [-0.94,-0.89, -0.94, -0.65, -0.6,-0.5, -0.2, -0.25, -0.18,-0.4];
+    var gridRight = bendLine([-0.18, -0.4], [0,-0.6], [0,-0.6], [0.4,-0.9], 15,  false, colors.darkBrown, colors.lightBrown);
+    myConcat(gridV, xnoise(gridRight[0], 0.35));
+    var gridC =  extendArrayWithDuplicate([1,0,0,1], gridV.length/VERTCOMP, COLORCOMP) ;
+
     //     objArr[0] = createShape(gl,
     //         gl.LINE_LOOP,
     //         gridV,
@@ -22,31 +23,63 @@ function treeGen(){
         boundingGrid.push(temp);
     }
 
-    var plantedTreeGoal = 3000;
+    //MOUNTAIN ZONE TREES
+
+    var plantedTreeGoal = 2000;
     var plantedTrees = 0;
+    var treeBase = 0.01
     while (plantedTrees < plantedTreeGoal){
-        pushTransform();
 
-            var rootX = -1 + Math.random()*2;
-            var rootY = -1 + Math.random()*2;
-            while(!inside([rootX,rootY], boundingGrid)){
-                rootX = -1 + Math.random()*2;
-                rootY = -1 + Math.random()*2;
+            var rootX = -1 + Math.random()*1.75;
+            var rootY = -1 + Math.random()*0.75;
+            if(inside([rootX,rootY], boundingGrid)){
+                pushTransform();
+                    var treeV = truenoise([rootX,rootY, rootX+treeBase,rootY, (rootX+(treeBase/2)),(rootY+(treeBase*2))], treeBase*0.2, treeBase*0.2);
+                    var treeC = [];
+                    myConcat(treeC, colors.darkGreen);
+                    myConcat(treeC, colors.darkGreen);
+                    myConcat(treeC, colors.darkGreen);
+
+                    objArr[plantedTrees] = createShape(gl,
+                        gl.TRIANGLES,
+                        treeV,
+                        treeC,
+                        transform.translate(0,0)
+                    );
+                    plantedTrees+= 1;
+                popTransform();
+
             }
-            var treeV = truenoise([rootX,rootY, rootX+0.01,rootY, (rootX+0.005),(rootY+0.02)], 0.002, 0.002);
-            var treeC = [];
-            myConcat(treeC, colors.darkGreen);
-            myConcat(treeC, colors.darkGreen);
-            myConcat(treeC, colors.darkGreen);
 
-            objArr[plantedTrees] = createShape(gl,
-                gl.TRIANGLES,
-                treeV,
-                treeC,
-                transform.translate(0,0)
-            );
-        popTransform();
-        plantedTrees+=1;
+
+    }
+    //BOTTOM TREES
+
+    plantedTreeGoal += 1000;
+    treeBase = 0.015;
+    while (plantedTrees < plantedTreeGoal){
+
+            var rootX = -1 + Math.random()*(0.5+Math.random()*0.25);
+            var rootY = -1 + Math.random()*0.75;
+            if(inside([rootX,rootY], boundingGrid)){
+                pushTransform();
+                    var treeV = truenoise([rootX,rootY, rootX+treeBase,rootY, (rootX+(treeBase/2)),(rootY+(treeBase*2))], treeBase*0.2, treeBase*0.2);
+                    var treeC = [];
+                    myConcat(treeC, colors.darkGreen);
+                    myConcat(treeC, colors.darkGreen);
+                    myConcat(treeC, colors.darkGreen);
+
+                    objArr[plantedTrees] = createShape(gl,
+                        gl.TRIANGLES,
+                        treeV,
+                        treeC,
+                        transform.translate(0,0)
+                    );
+                    plantedTrees+= 1;
+                popTransform();
+
+            }
+
 
     }
 

@@ -1,4 +1,4 @@
-var colors = {
+var vintagecolors = {
     "darkBrown":[64/255,35/255,19/255, 0.99],
     "mediumBrown":[103/255,40/255,20/255, 0.99],
 	"lightBrown":[123/255,45/255,20/255, 0.99],
@@ -11,8 +11,10 @@ var colors = {
     "darkGreen": [41/255,58/255,39/255,1],
     "skyBlue": [103/255,116/255,97/255,0.99],
     "darkBlue": [25/255,32/255,42/255,0.99],
-    "cloudWhite": [180/255,150/255,72/115,0.99]
+    "cloudWhite": [184/255,156/255,116/255,0.99]
 }
+
+var colors = vintagecolors;
 //Draws background with mount fuji and sky
 function mtFujiGen(){
     var objArr = [];

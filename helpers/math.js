@@ -101,8 +101,8 @@ function noise(line, xamount, yamount){
             lineOut[i+1] = line[i+1];
         }
         else{
-            lineOut[i] = line[i]+Math.random()*xamount;
-            lineOut[i+1] = line[i+1]+Math.random()*yamount;
+            lineOut[i] = line[i]+(-0.8*xamount + (2.2*Math.random()*xamount));
+            lineOut[i+1] = line[i+1]+(-1*yamount + (2*Math.random()*yamount));
         }
 
     }
@@ -117,8 +117,8 @@ function truenoise(line, xamount, yamount){
     var lineOut = [];
     lineOut.length = line.length;
     for(var i = 0; i < line.length-1; i+=2){
-        lineOut[i] = line[i]+Math.random()*xamount;
-        lineOut[i+1] = line[i+1]+Math.random()*yamount;
+        lineOut[i] = line[i]+(-1*xamount + (2*Math.random()*xamount));
+        lineOut[i+1] = line[i+1]+(-1*yamount + (2*Math.random()*yamount));
     }
 //    console.log(lineOut);
 
