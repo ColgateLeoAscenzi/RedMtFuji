@@ -18,9 +18,9 @@ function drawAll(){
     var treeShapes = treeGen();
 
     myConcat(allShapes, backgroundShapes);
+    myConcat(allShapes, cloudShapes);
     myConcat(allShapes, mtFujiShapes);
 	myConcat(allShapes, borderShapes);
-    myConcat(allShapes, cloudShapes);
     myConcat(allShapes, treeShapes);
 
     for(var i = 0; i < allShapes.length;i++){

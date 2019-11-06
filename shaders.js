@@ -27,6 +27,7 @@ var fragmentShaderSource =
 
 var gl;
 
+var colors;
 //Animations
 var framenumber = 0;
 var frameIncrement = 1;
@@ -65,6 +66,40 @@ var transform = new AffineTransform2D();
 var transformStack = [];
 
 scenes = ["drawAll();"];
+
+var vintage = true;
+
+var vintagecolors = {
+    "darkBrown":[64/255,35/255,19/255, 0.99],
+    "mediumBrown":[103/255,40/255,20/255, 0.99],
+    "lightBrown":[123/255,45/255,20/255, 0.99],
+    "darkRed":[165/255,55/255,21/255, 0.99],
+    "mediumRed":[165/255,55/255,21/255, 0.99],
+    "lighterRed":[170/255,62/255,22/255, 0.99],
+    "tan": [201/255,171/255,131/255, 0.99],
+    "tanGreen": [115/255,112/255,72/255,0.99],
+    "mediumGreen": [83/255,102/255,74/255,0.99],
+    "darkGreen": [41/255,58/255,39/255,1],
+    "skyBlue": [103/255,116/255,97/255,0.99],
+    "darkBlue": [25/255,32/255,42/255,0.9],
+    "cloudWhite": [184/255,156/255,116/255,0.99]
+}
+
+var restoredcolors = {
+    "darkBrown":[32/255,22/255,13/255, 0.99],
+    "mediumBrown":[84/255,36/255,26/255, 0.99],
+    "lightBrown":[90/255,37/255,25/255, 0.99],
+    "darkRed":[157/255,47/255,30/255, 0.99],
+    "mediumRed":[160/255,49/255,32/255, 0.99],
+    "lighterRed":[188/255,76/255,54/255, 0.99],
+    "tan": [201/255,171/255,131/255, 0.99],
+    "tanGreen": [124/255,139/255,116/255,0.99],
+    "mediumGreen": [80/255,106/255,79/255,0.99],
+    "darkGreen": [27/255,40/255,42/255,1],
+    "skyBlue": [42/255,83/255,137/255,0.99],
+    "darkBlue": [5/255,13/255,88/255,0.9],
+    "cloudWhite": [244/255,235/255,206/255,0.99]
+}
 
 function pushTransform() {
     transformStack.push( new AffineTransform2D(transform) );
@@ -160,9 +195,10 @@ function initGL() {
 
     document.getElementById("multiCheckbox").checked = false;
     document.getElementById("multiCheckbox").onchange = doPlaceHolder;
-    //
-    // document.getElementById("animationCheckbox").checked = false;
-    // document.getElementById("animationCheckbox").onchange = doAnimationCheckbox;
+
+
+
+    colors = vintagecolors;
 
     draw();    // draw the image
 
@@ -202,5 +238,16 @@ function doAnimationCheckbox() {
 }
 
 function doPlaceHolder(){
-    console.log("Checkbox Clicked");
+    if(vintage){
+        colors = restoredcolors;
+        vintage = false;
+    }
+    else{
+        colors = vintagecolors;
+        vintage = true;
+    }
+
+    draw();
+
+    console.log("Colorscheme Changed");
 }
