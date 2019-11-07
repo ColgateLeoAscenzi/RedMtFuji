@@ -45,7 +45,7 @@ var Lsystem = {
 
 
 function generateIteration(generation, word){
-	console.log(Lsystem);
+	// console.log(Lsystem);
 	if(generation == 0){
 		word = Lsystem.axiom;
 		generation++;
@@ -112,8 +112,11 @@ function drawFractal(generations, currentPosN, randomLength){
 		// console.log(word);
 	}
 	if(randomLength){
-		word = word.slice(5+Math.random()*5,word.length);
+		word = word.slice(2+Math.random()*5,word.length);
 
+	}
+	else{
+		word = word.slice(2, word.length);
 	}
 	var transformStack = [];
     pushTransform();

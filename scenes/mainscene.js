@@ -16,18 +16,20 @@ function drawAll(){
     var backgroundShapes = backgroundGen();
     var cloudShapes = cloudGen();
     var treeShapes = treeGen();
+    var lavaShapes = lavaGen();
 
     myConcat(allShapes, backgroundShapes);
     myConcat(allShapes, cloudShapes);
     myConcat(allShapes, mtFujiShapes);
 	myConcat(allShapes, borderShapes);
     myConcat(allShapes, treeShapes);
+    myConcat(allShapes, lavaShapes);
+
 
     for(var i = 0; i < allShapes.length;i++){
         drawShape(gl, allShapes[i]);
     }
-    var lavaShapes = lavaGen();
+    lavaFractalGen();
 
 
-    console.log(allShapes);
 }

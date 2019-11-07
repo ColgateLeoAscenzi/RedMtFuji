@@ -65,7 +65,6 @@ var red = [1,0,0,1];
 var transform = new AffineTransform2D();
 var transformStack = [];
 
-scenes = ["drawAll();"];
 
 var vintage = true;
 
@@ -76,8 +75,10 @@ var vintagecolors = {
     "darkRed":[165/255,55/255,21/255, 0.99],
     "mediumRed":[165/255,55/255,21/255, 0.99],
     "lighterRed":[170/255,62/255,22/255, 0.99],
+    "lighterRed2":[168/255,59/255,22/255, 0.99],
     "tan": [201/255,171/255,131/255, 0.99],
     "tanGreen": [115/255,112/255,72/255,0.99],
+    "tanGreen2": [109/255,112/255,76/255,0.99],
     "mediumGreen": [83/255,102/255,74/255,0.99],
     "darkGreen": [41/255,58/255,39/255,1],
     "skyBlue": [103/255,116/255,97/255,0.99],
@@ -92,8 +93,10 @@ var restoredcolors = {
     "darkRed":[157/255,47/255,30/255, 0.99],
     "mediumRed":[160/255,49/255,32/255, 0.99],
     "lighterRed":[188/255,76/255,54/255, 0.99],
+    "lighterRed2":[172/255,61/255,42/255, 0.99],
     "tan": [201/255,171/255,131/255, 0.99],
     "tanGreen": [124/255,139/255,116/255,0.99],
+    "tanGreen2": [116/255,134/255,110/255,0.99],
     "mediumGreen": [80/255,106/255,79/255,0.99],
     "darkGreen": [27/255,40/255,42/255,1],
     "skyBlue": [42/255,83/255,137/255,0.99],
@@ -116,10 +119,9 @@ function draw(){
     gl.clearColor(0,0,0,0);
     gl.clear(gl.COLOR_BUFFER_BIT);
 
-    sceneToDraw = parseInt(document.getElementById("sceneselect").selectedIndex);
-    console.log("Drawing image: " + document.getElementById("sceneselect").value+ " value: "+scenes[sceneToDraw]);
 
-    eval(scenes[sceneToDraw]);
+    drawAll();
+
     //drawScene();
 }
 
@@ -191,7 +193,6 @@ function initGL() {
         return;
     }
 
-    document.getElementById("sceneselect").onchange = draw;
 
     document.getElementById("multiCheckbox").checked = false;
     document.getElementById("multiCheckbox").onchange = doPlaceHolder;

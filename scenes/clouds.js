@@ -63,7 +63,7 @@ function cloudGen(){
 
                         var cloudC = extendArrayWithDuplicate(colors.cloudWhite, cloudV.length, COLORCOMP)
 
-                        console.log(cloudV);
+                        // console.log(cloudV);
                         objArr[clouds] = createShape(gl,
                             gl.TRIANGLE_FAN,
                             cloudV,

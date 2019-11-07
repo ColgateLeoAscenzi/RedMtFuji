@@ -71,26 +71,26 @@ function mtFujiGen(){
         );
 
 
-	//RESETTING VARIABLES
+	// the bottom part of mt fuji
 		fujiCrestV = [];
 		fujiCrestC = [];
 		fujiCrestV1 = [];
 		fujiCrestC1 = [];
 
 	    //mt fuji bottom
-        var leftBottom = bendLine([-0.125,-0.165], [-0.126, -0.166], [-0.26,-0.30], [-0.425,-0.40], 500,  false, colors.mediumRed, colors.lighterRed);
+        var leftBottom = bendLine([-0.125,-0.165], [-0.126, -0.166], [-0.26,-0.30], [-0.425,-0.40], 600,  false, colors.mediumRed, colors.lighterRed);
         fujiCrestV = xnoise(leftBottom[0], 0.01);
         fujiCrestC = leftBottom[1];
 
 
         //middle line
-        var middleBottom = bendLine([0.48,-0.165], [0.48,-0.3], [0.48,-0.5], [0.48,-0.70], 500, false, colors.mediumRed, colors.lighterRed);
+        var middleBottom = bendLine([0.48,-0.165], [0.48,-0.3], [0.48,-0.5], [0.48,-0.70], 600, false, colors.mediumRed, colors.lighterRed);
 
         fujiCrestV = mixConcat(fujiCrestV, middleBottom[0], VERTCOMP);
         fujiCrestC = mixConcat(fujiCrestC, middleBottom[1], COLORCOMP);
 
 
-        var rightBottom = bendLine([1.2,-0.165], [0.78,-0.4], [0.90,-0.5], [1.2,-0.85], 500, false, colors.mediumRed, colors.lighterRed);
+        var rightBottom = bendLine([1.2,-0.165], [0.78,-0.4], [0.90,-0.5], [1.2,-0.85], 600, false, colors.mediumRed, colors.lighterRed);
         fujiCrestV1 = mixConcat(middleBottom[0], xnoise(rightBottom[0], 0.01), VERTCOMP);
         fujiCrestC1 = mixConcat(middleBottom[1], rightBottom[1], COLORCOMP);
 
@@ -104,25 +104,27 @@ function mtFujiGen(){
             transform.translate(0,0)
         );
 
+
+        //the grass at the ottom of fuji
 		fujiCrestV = [];
 		fujiCrestC = [];
 		fujiCrestV1 = [];
 		fujiCrestC1 = [];
 
 	    //mt fuji bottom
-       var leftBottom = bendLine([-0.425,-0.40], [-0.42, -0.45], [-1.4,-0.84], [-1.74,-0.99], 500,  false, colors.tanGreen, colors.mediumGreen);
+       var leftBottom = bendLine([-0.425,-0.40], [-0.42, -0.45], [-1.4,-0.84], [-1.74,-0.99], 700,  false, colors.tanGreen, colors.mediumGreen);
        fujiCrestV = xnoise(leftBottom[0], 0.01);
        fujiCrestC = leftBottom[1];
 
 
        //middle line
-       var middleBottom = bendLine([0.48,-0.65], [0.48,-0.95], [0.48,-0.97], [0.48,-0.99], 500, false,  colors.tanGreen, colors.mediumGreen);
+       var middleBottom = bendLine([0.48,-0.65], [0.48,-0.95], [0.48,-0.97], [0.48,-0.99], 700, false,  colors.tanGreen, colors.mediumGreen);
 
        fujiCrestV = mixConcat(fujiCrestV, middleBottom[0], VERTCOMP);
        fujiCrestC = mixConcat(fujiCrestC, middleBottom[1], COLORCOMP);
 
 
-       var rightBottom = bendLine([1.2,-0.85], [1.35,-0.86], [1.6,-0.92], [1.8,-0.99], 500, false, colors.tanGreen, colors.mediumGreen);
+       var rightBottom = bendLine([1.2,-0.85], [1.35,-0.86], [1.6,-0.92], [1.8,-0.99], 700, false, colors.tanGreen, colors.mediumGreen);
        fujiCrestV1 = mixConcat(middleBottom[0], xnoise(rightBottom[0], 0.01), VERTCOMP);
        fujiCrestC1 = mixConcat(middleBottom[1], rightBottom[1], COLORCOMP);
 
@@ -135,6 +137,43 @@ function mtFujiGen(){
            fujiCrestC,
            transform.translate(0,0)
        );
+
+
+
+    //lastly a gradient banddaid
+    //for the red mountain part touching the green
+	fujiCrestV = [];
+	fujiCrestC = [];
+	fujiCrestV1 = [];
+	fujiCrestC1 = [];
+
+
+    //mt fuji bottom
+   var leftBottom = bendLine([-0.17,-0.2], [-0.41, -0.4], [-0.41,-0.4], [-0.545,-0.48], 700,  false, colors.lighterRed2, colors.tanGreen2);
+   fujiCrestV = xnoise(leftBottom[0], 0.01);
+   fujiCrestC = leftBottom[1];
+
+
+   //middle line
+   var middleBottom = bendLine([0.48,-0.38], [0.48,-0.7], [0.48,-0.7], [0.48,-0.8], 700, false,  colors.lighterRed2, colors.tanGreen2);
+
+   fujiCrestV = mixConcat(fujiCrestV, middleBottom[0], VERTCOMP);
+   fujiCrestC = mixConcat(fujiCrestC, middleBottom[1], COLORCOMP);
+
+
+   var rightBottom = bendLine([1.2,-0.38], [1.35,-0.8], [1.6,-0.9], [1.8,-1], 700, false,  colors.lighterRed2, colors.tanGreen2);
+   fujiCrestV1 = mixConcat(middleBottom[0], xnoise(rightBottom[0], 0.01), VERTCOMP);
+   fujiCrestC1 = mixConcat(middleBottom[1], rightBottom[1], COLORCOMP);
+
+   myConcat(fujiCrestV, fujiCrestV1);
+   myConcat(fujiCrestC, fujiCrestC1);
+
+    objArr[4] = createShape(gl,
+       gl.LINES,
+       fujiCrestV,
+       fujiCrestC,
+       transform.translate(0,0)
+   );
 
 
     popTransform();

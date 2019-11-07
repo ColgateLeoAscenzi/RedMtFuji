@@ -89,15 +89,9 @@ function filledShape(color, vertices, drawMode){
 
 }
 // -------------- FILLED SHAPE FUNCTIONS -----------------------//
-function filledTriangle(color, vertices, drawMode){
-    if(drawMode == undefined){
-        var drawMode = "gl.TRIANGLES";
-    }
-    filledShape(color, vertices, drawMode)
-
-}
 
 function drawLine(sx, sy, angle, linelength, mcolor){
+
     var newColor = (uniformColorGen(mcolor, 2));
 
 
@@ -106,73 +100,23 @@ function drawLine(sx, sy, angle, linelength, mcolor){
     filledShape(newColor, vertices, "gl.LINES");
 
 }
+
 
 function drawThickLine(sx, sy, angle, linelength, mcolor){
-    var newColor = (uniformColorGen(mcolor, 2));
 
+    var nsx = sx+linelength*Math.cos(radians(angle));
+    var nsy = sy+linelength*Math.sin(radians(angle));
 
-    var vertices = [sx,sy, sx+linelength*Math.cos(radians(angle)), sy+linelength*Math.sin(radians(angle))];
+    var shortX = sx+(linelength/2)*Math.cos(radians(angle))
+    var shortY = sy+(linelength/2)*Math.sin(radians(angle))
 
-    filledShape(newColor, vertices, "gl.LINES");
+    var lineLeft = bendLine([sx,sy], [sx, shortY], [sx, shortY], [nsx,nsy], 30,  false, colors.cloudWhite, colors.cloudWhite)[0];
+    var lineRight = bendLine([nsx+0.01, nsy], [sx+0.01+Math.random()*0.01, shortY], [sx+0.01-Math.random()*0.01, shortY], [sx+0.01,sy], 30,  false, colors.cloudWhite, colors.cloudWhite)[0];
+    myConcat(lineLeft, lineRight);
 
-}
+    var newColor =  extendArrayWithDuplicate(colors.cloudWhite, lineLeft.length/VERTCOMP, COLORCOMP);
 
-function shape(center, newC, color, sideNum, sideLength){
-    var sumOfIntAng = (sideNum-2)*180;
-    var newColor = [];
-    //generates new uniform colors if not specified
-    if(color.length == 1){
-        for(var i = 0; i < sideNum; i++){
-            newColor.push(uniformColorGen(color[0], sideNum));
-        }
-    }
-    else{
-        newColor = color;
-    }
-    //aligns it so the bottom is flat
-    pushTransform();
-        transform.rotate(radians((-sumOfIntAng)/(2*sideNum)));
-        //transform.scale(3/sideNum);
-        for(var i = 0; i < sideNum; i++){
-            //makes triangles and rotate
-            pushTransform();
-                transform.rotate(radians(360/sideNum)*i);
-                var tempTriCoords = genTriangle(center, sideLength, [(360/sideNum), (180-(360/sideNum))/2,(180-(360/sideNum))/2]);
-                tempTriCoords = fixCenter(tempTriCoords, newC, radians(360/sideNum)*i, sideNum);
-                filledTriangle(newColor[i], tempTriCoords);
-            popTransform();
-
-        }
-    popTransform();
-
-}
-
-// ------------------- non basic shapes -----------------------//
-function hexagon(center, newC, color, sideLength){
-    shape(center, newC, color, 6, sideLength);
-
-}
-
-function pentagon(center, newC, color, sideLength){
-    shape(center, newC, color, 5, sideLength);
-}
-
-
-function genTriangle(center, side, angles){
-    triCoord = [center[0], center[1]];
-
-    //var a = (side* Math.sin(radians(angles[0])))/Math.sin(radians(angles[2]));
-    triCoord.push(center[0]+side);
-    triCoord.push(center[1]);
-
-    var b = (side * Math.sin(radians(angles[1])))/Math.sin(radians(angles[2]));
-    var dy = b*Math.sin(radians(angles[0]));
-    var dx = b*Math.cos(radians(angles[0]));
-
-    triCoord.push(center[0]+dx);
-    triCoord.push(center[1]+dy);
-
-    return triCoord;
+    filledShape(newColor, lineLeft, "gl.TRIANGLE_FAN");
 }
 
 function bendLine(pStart, p1, p2, pEnd, numPts, drawGuide, startColor, endColor){
@@ -195,17 +139,4 @@ function bendLine(pStart, p1, p2, pEnd, numPts, drawGuide, startColor, endColor)
 
 
 	return [curve_pts, newColor];
-}
-
-function curveTriangle(corner, side, angles, p1, p2, drawGuide){
-	var startVert = genTriangle(corner, side, angles);
-	//save bottom left
-	var newVert = [startVert[0], startVert[1]];
-
-	var bentVert = bendLine([startVert[2],startVert[3]], p1, p2, [startVert[4],startVert[5]], drawGuide);
-
-	for(var i = 0; i < bentVert.length; i++){
-		newVert.push(bentVert[i]);
-	}
-	return newVert;
 }
