@@ -107,6 +107,16 @@ function drawLine(sx, sy, angle, linelength, mcolor){
 
 }
 
+function drawThickLine(sx, sy, angle, linelength, mcolor){
+    var newColor = (uniformColorGen(mcolor, 2));
+
+
+    var vertices = [sx,sy, sx+linelength*Math.cos(radians(angle)), sy+linelength*Math.sin(radians(angle))];
+
+    filledShape(newColor, vertices, "gl.LINES");
+
+}
+
 function shape(center, newC, color, sideNum, sideLength){
     var sumOfIntAng = (sideNum-2)*180;
     var newColor = [];
@@ -199,6 +209,3 @@ function curveTriangle(corner, side, angles, p1, p2, drawGuide){
 	}
 	return newVert;
 }
-
-
-

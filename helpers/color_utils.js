@@ -80,16 +80,6 @@ function convertHSLtoRGB(color) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
 //INCOMPLETE... you have to do a vertical gradient!
 function create2DGradientShape(gl, bounds, sColor, eColor, isHorizontal, isHSL, mat) {
 

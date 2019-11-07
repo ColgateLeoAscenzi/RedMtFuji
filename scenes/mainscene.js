@@ -26,5 +26,8 @@ function drawAll(){
     for(var i = 0; i < allShapes.length;i++){
         drawShape(gl, allShapes[i]);
     }
+    var lavaShapes = lavaGen();
+
+
     console.log(allShapes);
 }
