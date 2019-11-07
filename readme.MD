@@ -46,3 +46,7 @@ One thing I hope everyone can check out is the code for the L-System. I think I 
 - *background.jpg:* A subtle woodblock texture, can be seen with all colors at a 0.99 alpha
 - *index.html:* Creates the canvas and loads all the js files
 - *shaders.js:* All the setup code for the shaders and holds the color pallete and a few other global variables
+
+
+*For Professor Elodie Fourquets 435 Computer Graphics Course*
+*Project 2: Fall 2019, Colgate University. By Leo Ascenzi*
