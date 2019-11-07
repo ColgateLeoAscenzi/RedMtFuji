@@ -1,4 +1,5 @@
 **Introduction and Purpose**
+
 This website is a recreation of the artwork: South Wind, Clear Dawn from the Thirty-six views of Mt. Fuji by Katsushika Hokusai.
 
 My reference for this image came from a book titled *Hokusai* by Gian Carlo Canza (Calza, Gian Carlo. Hokusai. Phaidon Press, 2003., pg. 262)
@@ -28,4 +29,6 @@ When I thought of an art piece that I wanted to recreate, this style instantly c
  - *mainscene.js:* Calls all the other scenes in order from back to front
  - *mtfuji.js:* Creates the gradient Mt. Fuji using thousands of stacked lines
  - *trees.js:* Generates 2000 thin trees and 1000 thicker trees within a spawn location at a random position with a random amount of added noise. Thick trees can only spawn below a certain x and y
-- *index.html:* Creates the canvas
+- *background.jpg:* A subtle woodblock texture, can be seen with all colors at a 0.99 alpha
+- *index.html:* Creates the canvas and loads all the js files
+- *shaders.js:* All the setup code for the shaders and holds the color pallete and a few other global variables
